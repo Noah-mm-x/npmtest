@@ -1,0 +1,11 @@
+{
+  "name": "uitest",
+  "version": "1.0.0",
+  "description": "测试ui包",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mfx",
+  "license": "ISC"
+}
