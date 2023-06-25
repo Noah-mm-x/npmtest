@@ -13,7 +13,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
-      - run: npm run build
       - name: Publish to NPM and push to Github
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
