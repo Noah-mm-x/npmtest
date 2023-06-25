@@ -1,0 +1,30 @@
+name: npm publish
+on:
+  push:
+    branches:
+    - main # 只在 main 分支进行自动发布
+      
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Set up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build
+        run: npm run build
+        
+      - name: Publish to npm
+        uses: marvinpinto/action-automatic-npm-publish@v1.3.0
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+        with:
+          args: "--access public"
