@@ -1,30 +1,21 @@
-name: npm publish
+name: publish
+
 on:
   push:
-    branches:
-    - main # 只在 main 分支进行自动发布
-      
+    branches: [ main ]
 jobs:
-  build-and-publish:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Set up Node
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Build
-        run: npm run build
-        
-      - name: Publish to npm
-        uses: marvinpinto/action-automatic-npm-publish@v1.3.0
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build
+      - name: Publish to NPM and push to Github
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
-        with:
-          args: "--access public"
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          npm publish 
